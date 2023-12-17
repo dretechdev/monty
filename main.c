@@ -1,19 +1,20 @@
 #include "monty.h"
-/* bus_t bus = {NULL, NULL, NULL, 0}; */
+bus_t bus = {NULL, NULL, NULL, 0};
+
 /**
- * main_function - This is the monty code interpreter
+ * main - This is the monty code interpreter
  * @argc: The number of arguments
  * @argv: The monty file location
  * Return: 0 on success
  */
-int main_function(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
-	char *detail;
+	char *content;
 	FILE *file;
 	size_t actualSize = 0;
 	ssize_t line_reader = 1;
 	stack_t *stack = NULL;
-	unsigned int lineNumber = 0;
+	unsigned int counter = 0;
 
 	if (argc != 2)
 	{
@@ -29,13 +30,13 @@ int main_function(int argc, char *argv[])
 	}
 	while (line_reader > 0)
 	{
-		detail = NULL;
-		line_reader = getline(&detail, &actualSize, file);
-		bus.detail = detail;
-		lineNumber++;
+		content = NULL;
+		line_reader = getline(&content, &actualSize, file);
+		bus.content = content;
+		counter++;
 		if (line_reader > 0)
-			execute(detail, &stack, lineNumber, file);
-		free(detail);
+			execute(content, &stack, counter, file);
+		free(content);
 	}
 	free_stack(stack);
 	fclose(file);

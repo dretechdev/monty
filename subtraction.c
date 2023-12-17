@@ -1,39 +1,29 @@
 #include "monty.h"
 /**
  * fun_subtraction - This subtracts two elements of the stack
- * @stackhead: This is the stack head
- * @lineNumber: This is the line number
+ * @head: This is the stack head
+ * @counter: This is the line number
  * Return: This has no return value
  */
-void fun_subtraction(stack_t **stackhead, unsigned int lineNumber)
+void fun_subtraction(stack_t **head, unsigned int counter)
 {
 	stack_t *h;
 	int tempo, the_node;
 
-	h = *stackhead;
+	h = *head;
 	for (the_node = 0; h != NULL; the_node++)
 		h = h->next;
-	if (lenght < 2)
+	if (the_node < 2)
 	{
-		fprintf(stderr, "L%d: can't sub, stack too short\n", lineNumber);
-		cleanAndExit(stackhead);
+		fprintf(stderr, "L%d: can't sub, stack too short\n", counter);
+		fclose(bus.file);
+		free(bus.content);
+		free_stack(*head);
+		exit(EXIT_FAILURE);
 	}
-	h = *stackhead;
+	h = *head;
 	tempo = h->next->n - h->n;
 	h->next->n = tempo;
-	*stackhead = h->next;
+	*head = h->next;
 	free(h);
-}
-
-/**
- * cleanAndExit - Cleans up resources and exits with failure status
- * @stackhead: The Stack head
- * Return: No return value
- */
-void cleanAndExit(stack_t *stackhead)
-{
-	fclose(bus.file);
-	free(bus.content);
-	free_stack(stackhead);
-	exit(EXIT_FAILURE);
 }

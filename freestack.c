@@ -3,7 +3,7 @@
  * freestack - This function frees a doubly linked list
  * @head: This is the head of the stack
  */
-void freestack(stack_t *head)
+void free_stack(stack_t *head)
 {
 	stack_t *current = head;
 

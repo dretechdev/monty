@@ -8,7 +8,7 @@
  */
 void fun_pstr(stack_t **head, unsigned int counter)
 {
-	stack_t *head;
+	stack_t *h;
 	(void)counter;
 
 	h = *head;

@@ -1,16 +1,16 @@
 #include "monty.h"
 /**
  * fun_swap_stack - This adds the top two elements of the stack
- * @stackhead: The head of the stack
- * @lineNumber: The line number
+ * @head: The head of the stack
+ * @counter: The line number
  * Return: No return value
  */
-void fun_swap_stack(stack_t **stackhead, unsigned int lineNumber)
+void fun_swap_stack(stack_t **head, unsigned int counter)
 {
 	stack_t *h;
 	int length = 0, auxiliary;
 
-	h = *stackhead;
+	h = *head;
 	while (h)
 	{
 		h = h->next;
@@ -18,13 +18,13 @@ void fun_swap_stack(stack_t **stackhead, unsigned int lineNumber)
 	}
 	if (length < 2)
 	{
-		fprintf(stderr, "L%d: can't swap, stack too short\n", lineNumber);
+		fprintf(stderr, "L%d: can't swap, stack too short\n", counter);
 		fclose(bus.file);
 		free(bus.content);
-		free_stack(*stackhead);
+		free_stack(*head);
 		exit(EXIT_FAILURE);
 	}
-	h = *stackhead;
+	h = *head;
 	auxiliary = h->n;
 	h->n = h->next->n;
 	h->next->n = auxiliary;

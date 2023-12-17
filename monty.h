@@ -1,31 +1,12 @@
-#ifndef _MONTY_H_
-#define _MONTY_H_
+#ifndef MONTY_H
+#define MONTY_H
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdlib.h>
-
-
-/* PROTOTYPES */
-void cleanAndExit(stack_t *head);
-char *get_next_token(char *content);
-void fun_multiplication(stack_t **stackhead, unsigned int lineNumber);
-void fun_division(stack_t **head, unsigned int counter);
-void fun_modulus(stack_t **head, unsigned int counter);
-void fun_pall(stack_t **head, unsigned int counter);
-void fun_pstr(stack_t **head, unsigned int counter);
-void fun_addition(stack_t **head, unsigned int counter);
-int execute(char *content, stack_t **stack, unsigned int lineNum, FILE *file);
-void fun_rotr(stack_t **head, __attribute__((unused)) unsigned int counter);
-void fun_pchar(stack_t **head, unsigned int counter);
-void fun_push(stack_t **head, unsigned int counter);
-void set_stack_mode(stack_t **head, unsigned int counter);
-void pushnode(stack_t **head, int n);
-void fun_subtraction(stack_t **stackhead, unsigned int lineNumber);
-void fun_pop(stack_t **stackhead, unsigned int lineNumber);
-void fun_rotl(stack_t **stackhead, __attribute__((unused)) unsigned int lineN);
-void fun_printTopElement(stack_t **stackhead, unsigned int lineNumber);
-void fun_swap_stack(stack_t **stackhead, unsigned int lineNumber);
-
+#include <sys/types.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <string.h>
+#include <ctype.h>
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -43,6 +24,38 @@ typedef struct stack_s
 } stack_t;
 
 /**
+ * struct bus_s - variables, args, file, line content
+ * @arg: The value
+ * @file: The pointer to monty file
+ * @content: line content
+ * @lifi: flag change stack <-> queue
+ * Description: This carries values through the program
+ */
+typedef struct bus_s
+{
+	char *arg;
+	FILE *file;
+	char *content;
+	int lifi;
+} bus_t;
+extern bus_t bus;
+
+/**
+ * struct montglb_s - Variables
+ * @arg: a value
+ * @file: The pointer
+ * @line: The content
+ * @lifo: Flag
+ */
+typedef struct montglb_s
+{
+	char *line;
+	char *arg;
+	FILE *file;
+	int lifo;
+} montglb_t;
+
+/**
  * struct instruction_s - opcode and its function
  * @opcode: the opcode
  * @f: function to handle the opcode
@@ -56,4 +69,28 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
+char *_realloc(char *ptr, unsigned int old_size, unsigned int new_size);
+ssize_t getstdin(char **lineptr, int file);
+char *clean_line(char *content);
+void fun_push(stack_t **head, unsigned int counter);
+void fun_pall(stack_t **head, unsigned int counter);
+void fun_printTopElement(stack_t **head, unsigned int counter);
+int execute(char *content, stack_t **stack, unsigned int counter, FILE *file);
+void free_stack(stack_t *head);
+void fun_pop(stack_t **head, unsigned int counter);
+void fun_swap_stack(stack_t **head, unsigned int counter);
+void fun_addition(stack_t **head, unsigned int counter);
+void fun_nop(stack_t **head, unsigned int counter);
+void fun_subtraction(stack_t **head, unsigned int counter);
+void fun_division(stack_t **head, unsigned int counter);
+void fun_multiplication(stack_t **head, unsigned int counter);
+void fun_modulus(stack_t **head, unsigned int counter);
+void fun_pchar(stack_t **head, unsigned int counter);
+void fun_pstr(stack_t **head, unsigned int counter);
+void fun_rotl(stack_t **head, __attribute__((unused)) unsigned int count);
+void fun_rotr(stack_t **head, __attribute__((unused)) unsigned int counter);
+void pushnode(stack_t **head, int n);
+void pushqueue(stack_t **head, int n);
+void set_queue_mode(stack_t **head, unsigned int counter);
+void set_stack_mode(stack_t **head, unsigned int counter);
 #endif

@@ -19,25 +19,19 @@ void fun_pchar(stack_t **head, unsigned int counter)
 	if (!h)
 	{
 		fprintf(stderr, "L%d: can't pchar, stack empty\n", counter);
-		cleanAndExit(*head);
+		fclose(bus.file);
+		free(bus.content);
+		free_stack(*head);
+		exit(EXIT_FAILURE);
 	}
 
 	if (h->n > MAX_CHAR_VALUE || h->n < MIN_CHAR_VALUE)
 	{
 		fprintf(stderr, "L%d: can't pchar, value out of range\n", counter);
-		cleanAndExit(*head);
+		fclose(bus.file);
+		free(bus.content);
+		free_stack(*head);
+		exit(EXIT_FAILURE);
 	}
 	printf("%c\n", h->n);
-}
-/**
- * cleanAndExit - Cleans up resources and exits with failure status
- * @head: The stack head
- * Return: No return value
- */
-void cleanAndExit(stack_t *head)
-{
-	fclose(bus.file);
-	free(bus.content);
-	free_stack(head);
-	exit(EXIT_FAILURE);
 }

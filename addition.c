@@ -8,7 +8,7 @@
 void fun_addition(stack_t **head, unsigned int counter)
 {
 	stack_t *h;
-	int length = 0;
+	int length = 0, sum;
 
 	h = *head;
 	while (h)
@@ -19,25 +19,14 @@ void fun_addition(stack_t **head, unsigned int counter)
 	if (length < 2)
 	{
 		fprintf(stderr, "L%d: can't add, stack too short\n", counter);
-		cleanAndExit(*head);
+		fclose(bus.file);
+		free(bus.content);
+		free_stack(*head);
+		exit(EXIT_FAILURE);
 	}
-
-	int sum = (*head)->n + (*head)->next->n;
-	(*head)->next->n = sum;
-
-	stack_t *temporary = *head;
-	*head = (*head)->next;
-	free(temporary);
-}
-/**
- * cleanAndExit - Cleans up resources and exits with failure status
- * @head: The stack head
- * Return: no return value
- */
-void cleanAndExit(stack_t *head)
-{
-	fclose(bus.file);
-	free(bus.content);
-	free_stack(head);
-	exit(EXIT_FAILURE);
+	h = *head;
+	sum = (h->n) + (h->next->n);
+	h->next->n = sum;
+	*head = h->next;
+	free(h);
 }
